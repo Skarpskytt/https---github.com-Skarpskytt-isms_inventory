@@ -63,30 +63,39 @@
             </div>
 
             <!-- Table -->
+<!-- ...existing code... -->
+            <!-- Table -->
             <div class="bg-white p-4 rounded-lg shadow">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr class="border-b">
-                            <th class="p-2 text-left">Name</th>
+                            <th class="p-2 text-left">Requester Name</th>
                             <th class="p-2 text-left">Request Type</th>
                             <th class="p-2 text-left">Quantity</th>
                             <th class="p-2 text-left">Details</th>
-                            <th class="p-2 text-left">Equipment Type</th>
-                            <th class="p-2 text-left">Recent</th>
+                            <th class="p-2 text-left">Equipment Name</th>
+                            <th class="p-2 text-left">Date Needed</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b">
-                            <td class="p-2">John Doe</td>
-                            <td class="p-2">Borrow</td>
-                            <td class="p-2">3</td>
-                            <td class="p-2">Laptop</td>
-                            <td class="p-2">Electronics</td>
-                            <td class="p-2">Today</td>
-                        </tr>
+                        @forelse($requests as $request)
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-2">{{ $request->RequesterName }}</td>
+                                <td class="p-2">{{ $request->RequestType }}</td>
+                                <td class="p-2">{{ $request->Qty }}</td>
+                                <td class="p-2">{{ $request->RequestDetail }}</td>
+                                <td class="p-2">{{ $request->equipment->EquipmentDescription ?? 'N/A' }}</td>
+                                <td class="p-2">{{ \Carbon\Carbon::parse($request->DateNeeded)->format('M d, Y') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="p-4 text-center text-gray-500">No requests found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+<!-- ...existing code... -->
         </main>
     </div>
 </body>
